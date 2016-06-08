@@ -84,11 +84,6 @@ AUTHENTICATION_BACKENDS = (
 
 
 
-
-
-
-
-
 WSGI_APPLICATION = 'cirplacements.wsgi.application'
 
 
@@ -128,7 +123,7 @@ STATICFILES_DIRS = (MEDIA_ROOT,)
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'manage_staf'
+LOGIN_REDIRECT_URL = 'manage_staff'
 RECOVER_ONLY_ACTIVE_USERS = False
 ACCOUNT_ACTIVATION_DAYS = 2
 ANONYMOUS_USER_ID = -1
