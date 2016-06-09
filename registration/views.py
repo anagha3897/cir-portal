@@ -1,8 +1,8 @@
+from django.conf import settings
 from django.shortcuts import render
 
 # Create your views here.
 from django.shortcuts import redirect
-from cirplacements import settings
 from django.views.generic.edit import FormView, UpdateView
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic.detail import DetailView
@@ -13,6 +13,7 @@ from registration.forms import *
 from django.views.generic import ListView
 from django.http import Http404
 from django.http import HttpResponse
+import cirplacements
 import simplejson as json
 import pyexcel.ext.xls   # pip install pyexcel-xls
 import pyexcel.ext.xlsx # pip install pyexcel-xlsx
@@ -90,11 +91,11 @@ def handle_student_upload(request):
                 counter = counter+1
 
             return render_to_response('register/cirstaff/register_bulk_student_list.html',{'counter':counter },
-                                       context_instance=RequestContext(request))
+                                      context_instance=RequestContext(request))
         else :
-             return redirect(request.META['HTTP_REFERER'])
+            return redirect(request.META['HTTP_REFERER'])
     else:
-         return HttpResponseBadRequest()
+        return HttpResponseBadRequest()
 
 
 class StudentListView(LoginRequiredMixin,ListView):
@@ -116,3 +117,14 @@ class StudentListUpdateView(UpdateView):
             return obj
         else:
             raise Http404("That doesnt exist.")
+
+class StudentFilterExternalView(ListView):
+    template_name = "register/cirstaff/filter_external.html"
+    def get_queryset(self):
+        cgpa=float (self.request.GET.get('cgpa'))
+        arrears = self.request.GET.get('arrears')
+        branch = self.request.GET.get('branch')
+        tenth = self.request.GET.get('tenth')
+        twelth = self.request.GET.get('twelth')
+        print( cgpa + arrears + branch + tenth + twelth )
+        return Student.Object.filter(cgpa, curr_arrears=arrears, branch=branch, tenth_mark=tenth, twelth_mark=twelth)

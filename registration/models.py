@@ -10,7 +10,7 @@ class MyUserManager(BaseUserManager):
         """
         Creates and saves a User with the given email, email and password.
         """
-        if not email:raise ValueError('Users must have an email address')
+        if not email: raise ValueError('Users must have an email address')
         user = self.model(email=self.normalize_email(email))
         user.set_password(password)
         user.save(using=self._db)
@@ -32,11 +32,11 @@ class User(AbstractBaseUser):
     user.get_profile method and it's extended by the django-profile application.
     """
     user_id = models.AutoField(primary_key=True)
-    aums_id = models.CharField(_('Aums ID'),  max_length=32, blank=False, unique=True)
+    aums_id = models.CharField(_('Aums ID'), max_length=32, blank=False, unique=True)
     first_name = models.CharField(_('First Name'), max_length=32, blank=True, null=True,
                                   validators=[RegexValidator(regex='^[A-Za-z]*$')])
     last_name = models.CharField(_('Last Name'), max_length=32, blank=True, null=True,
-                                    validators=[RegexValidator(regex='^[A-Za-z]*$')])
+                                 validators=[RegexValidator(regex='^[A-Za-z]*$')])
     email = models.EmailField(_('Email'), db_index=True, unique=True)
     username = models.CharField(_('username'), max_length=32, blank=False, unique=True)
     is_active = models.BooleanField(default=True)
@@ -71,10 +71,9 @@ class User(AbstractBaseUser):
 
 
 class StudentManager(models.Manager):
-
     def create_student_fromfile(self, aums_id, name, curr_course, branch, tenth_mark, twelth_mark,
                                 s1, s2, s3, s4, s5, s6, cgpa, curr_arrears, hist_arrears):
-        student = self.create(aums_id=aums_id, name=name, curr_course=curr_course ,branch=branch,
+        student = self.create(aums_id=aums_id, name=name, curr_course=curr_course, branch=branch,
                               tenth_mark=tenth_mark, twelth_mark=twelth_mark, s1=s1, s2=s2, s3=s3, s4=s4,
                               s5=s5, s6=s6, cgpa=cgpa, curr_arrears=curr_arrears, hist_arrears=hist_arrears)
 
@@ -82,23 +81,24 @@ class StudentManager(models.Manager):
         return student
 
 
+
 class Student(models.Model):
-    aums_id = models.CharField(_('Aums ID'),  max_length=32, blank=False, unique=True,primary_key=True)
+    aums_id = models.CharField(_('Aums ID'), max_length=32, blank=False, unique=True, primary_key=True)
     name = models.CharField(_('First Name'), max_length=32, blank=True, null=True)
     curr_course = models.CharField(_('Current Course'), max_length=32, blank=True, null=True,
-                                  validators=[RegexValidator(regex='^[A-Za-z]*$')])
+                               validators=[RegexValidator(regex='^[A-Za-z]*$')])
     branch = models.CharField(_('Branch'), max_length=32, blank=True, null=True,
-                                  validators=[RegexValidator(regex='^[A-Za-z]*$')])
-    tenth_mark = models.CharField(_('10th Mark'),max_length=5, blank=True, null=True)
-    twelth_mark = models.CharField(_('12th Mark'),max_length=5, blank=True, null=True)
+                          validators=[RegexValidator(regex='^[A-Za-z]*$')])
+    tenth_mark = models.CharField(_('10th Mark'), max_length=5, blank=True, null=True)
+    twelth_mark = models.CharField(_('12th Mark'), max_length=5, blank=True, null=True)
     s1 = models.CharField(_('S1 Mark'), max_length=5, blank=True, null=True)
     s2 = models.CharField(_('S2 Mark'), max_length=5, blank=True, null=True)
     s3 = models.CharField(_('S3 Mark'), max_length=5, blank=True, null=True)
     s4 = models.CharField(_('S4 Mark'), max_length=5, blank=True, null=True)
     s5 = models.CharField(_('S5 Mark'), max_length=5, blank=True, null=True)
     s6 = models.CharField(_('S6 Mark'), max_length=5, blank=True, null=True)
-    cgpa = models.CharField(_('CGPA'), max_length=5,blank=True, null=True)
-    curr_arrears = models.CharField(_('No of current arrears'),max_length=5, blank=True, null=True)
-    hist_arrears = models.CharField(_('No of history arrears'),max_length=5, blank=True, null=True)
+    cgpa = models.CharField(_('CGPA'), max_length=5, blank=True, null=True)
+    curr_arrears = models.CharField(_('No of current arrears'), max_length=5, blank=True, null=True)
+    hist_arrears = models.CharField(_('No of history arrears'), max_length=5, blank=True, null=True)
 
     Objects = StudentManager()

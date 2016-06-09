@@ -22,4 +22,5 @@ urlpatterns = [
      url(r'^bulk/handle/$', views.handle_student_upload, name='upload_students'),
      url(r'^list/$', StudentListView.as_view(), name='list'),
      url(r'^profile/edit/(?P<aums_id>[\w|\W]+)/$', StudentListUpdateView.as_view(), name='student_profile_update'),
-    ]
+     url(r'^students/filter/external/$', TemplateView.as_view(), name="filter_external_list")
+]
